@@ -1,0 +1,2289 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Setoran Hafalan Al-Qur'an</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f8f5;
+    color: #26352b;
+}
+
+/* ================= LOGIN ================= */
+
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: linear-gradient(135deg, #0d6b3f, #15945a);
+}
+
+.login-box {
+    width: 100%;
+    max-width: 420px;
+    background: white;
+    padding: 35px;
+    border-radius: 18px;
+    box-shadow: 0 15px 40px rgba(0,0,0,.15);
+}
+
+.login-logo {
+    text-align: center;
+    font-size: 48px;
+    margin-bottom: 10px;
+}
+
+.login-box h1 {
+    text-align: center;
+    color: #0d6b3f;
+    margin-bottom: 8px;
+}
+
+.login-box p {
+    text-align: center;
+    color: #777;
+    margin-bottom: 25px;
+}
+
+/* ================= FORM ================= */
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 7px;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccd8cf;
+    border-radius: 9px;
+    font-size: 14px;
+    outline: none;
+    background: white;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: #15945a;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 90px;
+}
+
+.field {
+    margin-bottom: 17px;
+}
+
+/* ================= BUTTON ================= */
+
+.btn {
+    border: none;
+    padding: 12px 18px;
+    border-radius: 9px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.btn-primary {
+    background: #0d6b3f;
+    color: white;
+    width: 100%;
+}
+
+.btn-primary:hover {
+    background: #095532;
+}
+
+/* ================= ERROR ================= */
+
+.error {
+    color: #c62828;
+    background: #ffebee;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    display: none;
+}
+
+/* ================= APP ================= */
+
+.app {
+    display: none;
+    min-height: 100vh;
+}
+
+.header {
+    background: #0d6b3f;
+    color: white;
+    padding: 18px 25px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 15px;
+}
+
+.header-title {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.header-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logout {
+    background: white;
+    color: #0d6b3f;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 25px;
+}
+
+/* ================= NAV ================= */
+
+.nav {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.nav button {
+    border: none;
+    padding: 11px 18px;
+    border-radius: 9px;
+    background: white;
+    color: #0d6b3f;
+    cursor: pointer;
+    font-weight: bold;
+    border: 1px solid #dce7df;
+}
+
+.nav button.active {
+    background: #0d6b3f;
+    color: white;
+}
+
+/* ================= STAT ================= */
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.stat-card {
+    background: white;
+    padding: 20px;
+    border-radius: 13px;
+    box-shadow: 0 3px 12px rgba(0,0,0,.05);
+}
+
+.stat-title {
+    color: #777;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.stat-number {
+    font-size: 28px;
+    font-weight: bold;
+    color: #0d6b3f;
+}
+
+/* ================= CARD ================= */
+
+.card {
+    background: white;
+    border-radius: 14px;
+    padding: 25px;
+    box-shadow: 0 3px 12px rgba(0,0,0,.05);
+    margin-bottom: 25px;
+}
+
+.card h2 {
+    margin-bottom: 20px;
+    color: #0d6b3f;
+}
+
+/* ================= GRID ================= */
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0 20px;
+}
+
+.full {
+    grid-column: 1 / -1;
+}
+
+/* ================= TABLE ================= */
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 750px;
+}
+
+th,
+td {
+    padding: 12px;
+    border-bottom: 1px solid #e5ebe7;
+    text-align: left;
+    font-size: 14px;
+}
+
+th {
+    background: #edf6f0;
+    color: #0d6b3f;
+}
+
+.status-lancar {
+    color: #087f3e;
+    background: #e3f6ea;
+    padding: 5px 9px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.status-murojaah {
+    color: #a45b00;
+    background: #fff1d8;
+    padding: 5px 9px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.delete-btn {
+    background: #ffebee;
+    color: #c62828;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* ================= RANKING ================= */
+
+.rank-number {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.gold {
+    color: #d99b00;
+}
+
+.silver {
+    color: #777;
+}
+
+.bronze {
+    color: #9b5a2b;
+}
+
+/* ================= NOTICE ================= */
+
+.notice {
+    background: #eaf6ef;
+    border-left: 5px solid #0d6b3f;
+    padding: 12px 15px;
+    border-radius: 7px;
+    margin-bottom: 20px;
+    color: #356047;
+    font-size: 13px;
+}
+
+/* ================= LOADING ================= */
+
+.loading {
+    text-align: center;
+    padding: 20px;
+    color: #777;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width: 700px) {
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .full {
+        grid-column: auto;
+    }
+
+    .container {
+        padding: 15px;
+    }
+
+    .card {
+        padding: 18px;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     LOGIN
+===================================================== -->
+
+<div id="loginPage" class="login-page">
+
+    <div class="login-box">
+
+        <div class="login-logo">
+            📖
+        </div>
+
+        <h1>
+            Setoran Hafalan
+        </h1>
+
+        <p>
+            Al-Qur'an
+        </p>
+
+        <div id="loginError" class="error">
+            Silakan pilih username terlebih dahulu.
+        </div>
+
+        <div class="field">
+
+            <label>
+                Pilih Username
+            </label>
+
+            <select id="username">
+
+                <option value="">
+                    -- Pilih Ustadz --
+                </option>
+
+            </select>
+
+        </div>
+
+        <button
+            class="btn btn-primary"
+            onclick="login()">
+
+            Masuk
+
+        </button>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     APPLICATION
+===================================================== -->
+
+<div id="app" class="app">
+
+
+    <!-- HEADER -->
+
+    <header class="header">
+
+        <div class="header-title">
+            📖 Setoran Hafalan Al-Qur'an
+        </div>
+
+        <div class="header-user">
+
+            <span id="currentUser"></span>
+
+            <button
+                class="logout"
+                onclick="logout()">
+
+                Keluar
+
+            </button>
+
+        </div>
+
+    </header>
+
+
+
+    <main class="container">
+
+
+        <!-- NAVIGATION -->
+
+        <div class="nav">
+
+            <button
+                id="navSetoran"
+                class="active"
+                onclick="showTab('setoran')">
+
+                ➕ Setoran
+
+            </button>
+
+
+            <button
+                id="navRiwayat"
+                onclick="showTab('riwayat')">
+
+                📋 Riwayat
+
+            </button>
+
+
+            <button
+                id="navRanking"
+                onclick="showTab('ranking')">
+
+                🏆 Rekap & Ranking
+
+            </button>
+
+        </div>
+
+
+
+        <!-- =================================================
+             SETORAN
+        ================================================== -->
+
+        <section id="tabSetoran">
+
+
+            <!-- STATISTICS -->
+
+            <div class="stats">
+
+
+                <div class="stat-card">
+
+                    <div class="stat-title">
+                        Setoran Saya
+                    </div>
+
+                    <div
+                        id="statSetoran"
+                        class="stat-number">
+
+                        0
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="stat-card">
+
+                    <div class="stat-title">
+                        Lancar
+                    </div>
+
+                    <div
+                        id="statLancar"
+                        class="stat-number">
+
+                        0
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="stat-card">
+
+                    <div class="stat-title">
+                        Total Baris
+                    </div>
+
+                    <div
+                        id="statBaris"
+                        class="stat-number">
+
+                        0
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="notice">
+
+                Data tersimpan secara online di database.
+                Setoran yang dimasukkan oleh ustadz akan
+                dapat dilihat oleh pengguna lain yang
+                menggunakan website ini.
+
+            </div>
+
+
+
+            <!-- FORM -->
+
+            <div class="card">
+
+                <h2>
+                    Tambah Setoran Hafalan
+                </h2>
+
+
+                <form id="setoranForm">
+
+
+                    <div class="form-grid">
+
+
+                        <!-- TANGGAL -->
+
+                        <div class="field">
+
+                            <label>
+                                Tanggal
+                            </label>
+
+                            <input
+                                id="tanggal"
+                                type="date"
+                                required>
+
+                        </div>
+
+
+
+                        <!-- JUZ -->
+
+                        <div class="field">
+
+                            <label>
+                                Juz
+                            </label>
+
+                            <select
+                                id="juz"
+                                required>
+
+                                <option value="">
+                                    -- Pilih Juz --
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+
+                        <!-- SURAH -->
+
+                        <div class="field">
+
+                            <label>
+                                Surah
+                            </label>
+
+                            <select
+                                id="surah"
+                                required>
+
+                                <option value="">
+                                    -- Pilih Surah --
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+
+                        <!-- AYAT -->
+
+                        <div class="field">
+
+                            <label>
+                                Ayat
+                            </label>
+
+                            <input
+                                id="ayat"
+                                type="text"
+                                placeholder="Contoh: 1–10"
+                                required>
+
+                        </div>
+
+
+
+                        <!-- JUMLAH BARIS -->
+
+                        <div class="field">
+
+                            <label>
+                                Jumlah Baris
+                            </label>
+
+                            <input
+                                id="jumlahBaris"
+                                type="number"
+                                min="1"
+                                placeholder="Contoh: 10"
+                                required>
+
+                        </div>
+
+
+
+                        <!-- STATUS -->
+
+                        <div class="field">
+
+                            <label>
+                                Status
+                            </label>
+
+                            <select
+                                id="status"
+                                required>
+
+                                <option value="">
+                                    -- Pilih Status --
+                                </option>
+
+                                <option value="Lancar">
+                                    Lancar
+                                </option>
+
+                                <option value="Perlu Murojaah">
+                                    Perlu Murojaah
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+
+                        <!-- CATATAN -->
+
+                        <div class="field full">
+
+                            <label>
+                                Catatan
+                            </label>
+
+                            <textarea
+                                id="catatan"
+                                placeholder="Catatan tambahan jika diperlukan..."></textarea>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary">
+
+                        💾 Simpan Setoran
+
+                    </button>
+
+
+                </form>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             RIWAYAT
+        ================================================== -->
+
+        <section
+            id="tabRiwayat"
+            style="display:none">
+
+
+            <div class="card">
+
+                <h2>
+                    📋 Riwayat Setoran Saya
+                </h2>
+
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Tanggal
+                                </th>
+
+                                <th>
+                                    Juz
+                                </th>
+
+                                <th>
+                                    Surah
+                                </th>
+
+                                <th>
+                                    Ayat
+                                </th>
+
+                                <th>
+                                    Jumlah Baris
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+
+                                <th>
+                                    Catatan
+                                </th>
+
+                                <th>
+                                    Aksi
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="historyTable">
+
+                            <tr>
+                                <td colspan="8">
+                                    <div class="loading">
+                                        Memuat data...
+                                    </div>
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             RANKING
+        ================================================== -->
+
+        <section
+            id="tabRanking"
+            style="display:none">
+
+
+            <!-- RANKING -->
+
+            <div class="card">
+
+                <h2>
+                    🏆 Rekap & Ranking
+                </h2>
+
+
+                <div class="notice">
+
+                    Ranking berdasarkan total jumlah
+                    baris hafalan yang disetorkan.
+
+                </div>
+
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Ranking
+                                </th>
+
+                                <th>
+                                    Ustadz
+                                </th>
+
+                                <th>
+                                    Jumlah Setoran
+                                </th>
+
+                                <th>
+                                    Lancar
+                                </th>
+
+                                <th>
+                                    Perlu Murojaah
+                                </th>
+
+                                <th>
+                                    Total Baris
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="rankingTable">
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ALL DATA -->
+
+            <div class="card">
+
+                <h2>
+                    📋 Semua Data Setoran
+                </h2>
+
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Tanggal
+                                </th>
+
+                                <th>
+                                    Ustadz
+                                </th>
+
+                                <th>
+                                    Juz
+                                </th>
+
+                                <th>
+                                    Surah
+                                </th>
+
+                                <th>
+                                    Ayat
+                                </th>
+
+                                <th>
+                                    Jumlah Baris
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+
+                                <th>
+                                    Catatan
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="allDataTable">
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+</div>
+
+
+
+<!-- =====================================================
+     SUPABASE
+===================================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+<script>
+
+/* =====================================================
+   SUPABASE CONFIGURATION
+===================================================== */
+
+const SUPABASE_URL =
+    "https://yvvvqmpiswcqjyncsycr.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_SigyVWGgXMIqD8nyfPFW6g_sjDrwf0F";
+
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+
+/* =====================================================
+   USERS
+===================================================== */
+
+const USERS = [
+
+    "Ust Tri",
+    "Ust Muji",
+    "Ust Honip",
+    "Ust Yudi",
+    "Ust Ngarifin",
+    "Ust Rijal",
+    "Ust Zain",
+    "Ust Fajrin",
+    "Ust Titis",
+    "Ust Bachtiar",
+    "Ust Qohin"
+
+];
+
+
+
+/* =====================================================
+   JUZ
+===================================================== */
+
+const JUZ = [];
+
+for(let i = 1; i <= 30; i++){
+
+    JUZ.push("Juz " + i);
+
+}
+
+
+
+/* =====================================================
+   SURAH
+===================================================== */
+
+const SURAH = [
+
+"1. Al-Fatihah",
+"2. Al-Baqarah",
+"3. Ali Imran",
+"4. An-Nisa",
+"5. Al-Maidah",
+"6. Al-Anam",
+"7. Al-Araf",
+"8. Al-Anfal",
+"9. At-Taubah",
+"10. Yunus",
+"11. Hud",
+"12. Yusuf",
+"13. Ar-Rad",
+"14. Ibrahim",
+"15. Al-Hijr",
+"16. An-Nahl",
+"17. Al-Isra",
+"18. Al-Kahf",
+"19. Maryam",
+"20. Taha",
+"21. Al-Anbiya",
+"22. Al-Hajj",
+"23. Al-Muminun",
+"24. An-Nur",
+"25. Al-Furqan",
+"26. Asy-Syuara",
+"27. An-Naml",
+"28. Al-Qasas",
+"29. Al-Ankabut",
+"30. Ar-Rum",
+"31. Luqman",
+"32. As-Sajdah",
+"33. Al-Ahzab",
+"34. Saba",
+"35. Fatir",
+"36. Yasin",
+"37. As-Saffat",
+"38. Sad",
+"39. Az-Zumar",
+"40. Ghafir",
+"41. Fussilat",
+"42. Asy-Syura",
+"43. Az-Zukhruf",
+"44. Ad-Dukhan",
+"45. Al-Jasiyah",
+"46. Al-Ahqaf",
+"47. Muhammad",
+"48. Al-Fath",
+"49. Al-Hujurat",
+"50. Qaf",
+"51. Az-Zariyat",
+"52. At-Tur",
+"53. An-Najm",
+"54. Al-Qamar",
+"55. Ar-Rahman",
+"56. Al-Waqiah",
+"57. Al-Hadid",
+"58. Al-Mujadilah",
+"59. Al-Hasyr",
+"60. Al-Mumtahanah",
+"61. As-Saff",
+"62. Al-Jumah",
+"63. Al-Munafiqun",
+"64. At-Tagabun",
+"65. At-Talaq",
+"66. At-Tahrim",
+"67. Al-Mulk",
+"68. Al-Qalam",
+"69. Al-Haqqah",
+"70. Al-Maarij",
+"71. Nuh",
+"72. Al-Jinn",
+"73. Al-Muzzammil",
+"74. Al-Muddassir",
+"75. Al-Qiyamah",
+"76. Al-Insan",
+"77. Al-Mursalat",
+"78. An-Naba",
+"79. An-Naziat",
+"80. Abasa",
+"81. At-Takwir",
+"82. Al-Infitar",
+"83. Al-Mutaffifin",
+"84. Al-Insyiqaq",
+"85. Al-Buruj",
+"86. At-Tariq",
+"87. Al-Ala",
+"88. Al-Gasyiyah",
+"89. Al-Fajr",
+"90. Al-Balad",
+"91. Asy-Syams",
+"92. Al-Lail",
+"93. Ad-Duha",
+"94. Asy-Syarh",
+"95. At-Tin",
+"96. Al-Alaq",
+"97. Al-Qadr",
+"98. Al-Bayyinah",
+"99. Az-Zalzalah",
+"100. Al-Adiyat",
+"101. Al-Qariah",
+"102. At-Takasur",
+"103. Al-Asr",
+"104. Al-Humazah",
+"105. Al-Fil",
+"106. Quraisy",
+"107. Al-Maun",
+"108. Al-Kausar",
+"109. Al-Kafirun",
+"110. An-Nasr",
+"111. Al-Masad",
+"112. Al-Ikhlas",
+"113. Al-Falaq",
+"114. An-Nas"
+
+];
+
+
+
+/* =====================================================
+   CURRENT USER
+===================================================== */
+
+let currentUser = null;
+
+
+
+/* =====================================================
+   ELEMENTS
+===================================================== */
+
+const loginPage =
+    document.getElementById("loginPage");
+
+const app =
+    document.getElementById("app");
+
+const usernameSelect =
+    document.getElementById("username");
+
+const currentUserElement =
+    document.getElementById("currentUser");
+
+const loginError =
+    document.getElementById("loginError");
+
+
+
+/* =====================================================
+   SETUP DROPDOWNS
+===================================================== */
+
+function setupDropdowns(){
+
+
+    /* USER */
+
+    USERS.forEach(user => {
+
+        const option =
+            document.createElement("option");
+
+        option.value = user;
+
+        option.textContent = user;
+
+        usernameSelect.appendChild(option);
+
+    });
+
+
+
+    /* JUZ */
+
+    const juzSelect =
+        document.getElementById("juz");
+
+
+    JUZ.forEach(juz => {
+
+        const option =
+            document.createElement("option");
+
+        option.value = juz;
+
+        option.textContent = juz;
+
+        juzSelect.appendChild(option);
+
+    });
+
+
+
+    /* SURAH */
+
+    const surahSelect =
+        document.getElementById("surah");
+
+
+    SURAH.forEach(surah => {
+
+        const option =
+            document.createElement("option");
+
+        option.value = surah;
+
+        option.textContent = surah;
+
+        surahSelect.appendChild(option);
+
+    });
+
+}
+
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+function login(){
+
+    const username =
+        usernameSelect.value;
+
+
+    if(!USERS.includes(username)){
+
+        loginError.style.display =
+            "block";
+
+        return;
+
+    }
+
+
+    loginError.style.display =
+        "none";
+
+
+    currentUser = username;
+
+
+    sessionStorage.setItem(
+        "currentUser",
+        currentUser
+    );
+
+
+    loginPage.style.display =
+        "none";
+
+
+    app.style.display =
+        "block";
+
+
+    currentUserElement.textContent =
+        currentUser;
+
+
+    loadData();
+
+}
+
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+function logout(){
+
+    sessionStorage.removeItem(
+        "currentUser"
+    );
+
+
+    currentUser = null;
+
+
+    app.style.display =
+        "none";
+
+
+    loginPage.style.display =
+        "flex";
+
+
+    usernameSelect.value = "";
+
+}
+
+
+
+/* =====================================================
+   TAB
+===================================================== */
+
+function showTab(tab){
+
+    document.getElementById(
+        "tabSetoran"
+    ).style.display =
+        tab === "setoran"
+        ? "block"
+        : "none";
+
+
+    document.getElementById(
+        "tabRiwayat"
+    ).style.display =
+        tab === "riwayat"
+        ? "block"
+        : "none";
+
+
+    document.getElementById(
+        "tabRanking"
+    ).style.display =
+        tab === "ranking"
+        ? "block"
+        : "none";
+
+
+    document
+        .querySelectorAll(".nav button")
+        .forEach(button => {
+
+            button.classList.remove(
+                "active"
+            );
+
+        });
+
+
+    if(tab === "setoran"){
+
+        document
+            .getElementById("navSetoran")
+            .classList.add("active");
+
+    }
+
+
+    if(tab === "riwayat"){
+
+        document
+            .getElementById("navRiwayat")
+            .classList.add("active");
+
+    }
+
+
+    if(tab === "ranking"){
+
+        document
+            .getElementById("navRanking")
+            .classList.add("active");
+
+    }
+
+
+    loadData();
+
+}
+
+
+
+/* =====================================================
+   SAVE DATA
+===================================================== */
+
+document
+    .getElementById("setoranForm")
+    .addEventListener(
+        "submit",
+        async function(e){
+
+            e.preventDefault();
+
+
+            const tanggal =
+                document.getElementById(
+                    "tanggal"
+                ).value;
+
+
+            const juz =
+                document.getElementById(
+                    "juz"
+                ).value;
+
+
+            const surah =
+                document.getElementById(
+                    "surah"
+                ).value;
+
+
+            const ayat =
+                document.getElementById(
+                    "ayat"
+                ).value.trim();
+
+
+            const jumlahBaris =
+                Number(
+                    document.getElementById(
+                        "jumlahBaris"
+                    ).value
+                );
+
+
+            const status =
+                document.getElementById(
+                    "status"
+                ).value;
+
+
+            const catatan =
+                document.getElementById(
+                    "catatan"
+                ).value.trim();
+
+
+            if(
+                !tanggal ||
+                !juz ||
+                !surah ||
+                !ayat ||
+                !jumlahBaris ||
+                !status
+            ){
+
+                alert(
+                    "Silakan lengkapi semua data."
+                );
+
+                return;
+
+            }
+
+
+            const button =
+                e.target.querySelector(
+                    "button[type='submit']"
+                );
+
+
+            button.disabled = true;
+
+            button.textContent =
+                "⏳ Menyimpan...";
+
+
+            try {
+
+
+                const { error } =
+                    await supabaseClient
+                        .from("setoran_hafalan")
+                        .insert([{
+
+                            ustadz:
+                                currentUser,
+
+                            tanggal:
+                                tanggal,
+
+                            juz:
+                                juz,
+
+                            surah:
+                                surah,
+
+                            ayat:
+                                ayat,
+
+                            jumlah_baris:
+                                jumlahBaris,
+
+                            status:
+                                status,
+
+                            catatan:
+                                catatan || null
+
+                        }]);
+
+
+                if(error){
+
+                    console.error(error);
+
+                    alert(
+                        "Gagal menyimpan data:\n\n"
+                        + error.message
+                    );
+
+                    return;
+
+                }
+
+
+                alert(
+                    "✅ Setoran berhasil disimpan ke database."
+                );
+
+
+                document
+                    .getElementById(
+                        "setoranForm"
+                    )
+                    .reset();
+
+
+                setToday();
+
+
+                await loadData();
+
+
+            }
+            finally {
+
+                button.disabled = false;
+
+                button.textContent =
+                    "💾 Simpan Setoran";
+
+            }
+
+        }
+    );
+
+
+
+/* =====================================================
+   LOAD DATA
+===================================================== */
+
+async function loadData(){
+
+    if(!currentUser){
+
+        return;
+
+    }
+
+
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("setoran_hafalan")
+        .select("*")
+        .order(
+            "tanggal",
+            { ascending: false }
+        )
+        .order(
+            "created_at",
+            { ascending: false }
+        );
+
+
+    if(error){
+
+        console.error(error);
+
+        alert(
+            "Gagal mengambil data dari database:\n\n"
+            + error.message
+        );
+
+        return;
+
+    }
+
+
+    render(data || []);
+
+}
+
+
+
+/* =====================================================
+   RENDER
+===================================================== */
+
+function render(data){
+
+    const mine =
+        data.filter(
+            item =>
+                item.ustadz === currentUser
+        );
+
+
+
+    /* STAT SETORAN */
+
+    document.getElementById(
+        "statSetoran"
+    ).textContent =
+        mine.length;
+
+
+
+    /* STAT LANCAR */
+
+    document.getElementById(
+        "statLancar"
+    ).textContent =
+        mine.filter(
+            item =>
+                item.status === "Lancar"
+        ).length;
+
+
+
+    /* STAT BARIS */
+
+    document.getElementById(
+        "statBaris"
+    ).textContent =
+        mine.reduce(
+            (total,item) =>
+                total +
+                Number(
+                    item.jumlah_baris || 0
+                ),
+            0
+        );
+
+
+
+    renderHistory(mine);
+
+    renderRanking(data);
+
+    renderAllData(data);
+
+}
+
+
+
+/* =====================================================
+   HISTORY
+===================================================== */
+
+function renderHistory(data){
+
+    const table =
+        document.getElementById(
+            "historyTable"
+        );
+
+
+    table.innerHTML = "";
+
+
+    if(data.length === 0){
+
+        table.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="8"
+                    style="text-align:center">
+
+                    Belum ada data setoran.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    data.forEach(item => {
+
+        table.innerHTML += `
+
+            <tr>
+
+                <td>
+                    ${formatDate(item.tanggal)}
+                </td>
+
+                <td>
+                    ${escapeHTML(item.juz)}
+                </td>
+
+                <td>
+                    ${escapeHTML(item.surah)}
+                </td>
+
+                <td>
+                    ${escapeHTML(item.ayat)}
+                </td>
+
+                <td>
+                    <strong>
+                        ${Number(item.jumlah_baris || 0)}
+                    </strong>
+                </td>
+
+                <td>
+                    ${statusHTML(item.status)}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        item.catatan || "-"
+                    )}
+                </td>
+
+                <td>
+
+                    <button
+                        class="delete-btn"
+                        onclick="deleteData('${item.id}')">
+
+                        Hapus
+
+                    </button>
+
+                </td>
+
+            </tr>
+
+        `;
+
+    });
+
+}
+
+
+
+/* =====================================================
+   RANKING
+===================================================== */
+
+function renderRanking(data){
+
+    const table =
+        document.getElementById(
+            "rankingTable"
+        );
+
+
+    const ranking =
+        USERS.map(user => {
+
+            const userData =
+                data.filter(
+                    item =>
+                        item.ustadz === user
+                );
+
+
+            return {
+
+                user: user,
+
+                total:
+                    userData.length,
+
+                lancar:
+                    userData.filter(
+                        item =>
+                            item.status === "Lancar"
+                    ).length,
+
+                murojaah:
+                    userData.filter(
+                        item =>
+                            item.status ===
+                            "Perlu Murojaah"
+                    ).length,
+
+                baris:
+                    userData.reduce(
+                        (total,item) =>
+                            total +
+                            Number(
+                                item.jumlah_baris ||
+                                0
+                            ),
+                        0
+                    )
+
+            };
+
+        });
+
+
+    ranking.sort(
+        (a,b) => {
+
+            if(
+                b.baris !==
+                a.baris
+            ){
+
+                return b.baris -
+                    a.baris;
+
+            }
+
+
+            return b.total -
+                a.total;
+
+        }
+    );
+
+
+    table.innerHTML = "";
+
+
+    ranking.forEach(
+        (item,index) => {
+
+
+            let rankClass = "";
+
+
+            if(index === 0)
+                rankClass = "gold";
+
+
+            if(index === 1)
+                rankClass = "silver";
+
+
+            if(index === 2)
+                rankClass = "bronze";
+
+
+            table.innerHTML += `
+
+                <tr>
+
+                    <td>
+
+                        <span
+                            class="rank-number ${rankClass}">
+
+                            ${index + 1}
+
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        <strong>
+                            ${escapeHTML(item.user)}
+                        </strong>
+
+                    </td>
+
+
+                    <td>
+                        ${item.total}
+                    </td>
+
+
+                    <td>
+                        ${item.lancar}
+                    </td>
+
+
+                    <td>
+                        ${item.murojaah}
+                    </td>
+
+
+                    <td>
+
+                        <strong>
+                            ${item.baris}
+                        </strong>
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        }
+    );
+
+}
+
+
+
+/* =====================================================
+   ALL DATA
+===================================================== */
+
+function renderAllData(data){
+
+    const table =
+        document.getElementById(
+            "allDataTable"
+        );
+
+
+    table.innerHTML = "";
+
+
+    if(data.length === 0){
+
+        table.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="8"
+                    style="text-align:center">
+
+                    Belum ada data setoran.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    data.forEach(item => {
+
+        table.innerHTML += `
+
+            <tr>
+
+                <td>
+                    ${formatDate(item.tanggal)}
+                </td>
+
+                <td>
+                    ${escapeHTML(item.ustadz)}
+                </td>
+
+                <td>
+                    ${escapeHTML(item.juz)}
+                </td>
+
+                <td>
+                    ${escapeHTML(item.surah)}
+                </td>
+
+                <td>
+                    ${escapeHTML(item.ayat)}
+                </td>
+
+                <td>
+
+                    <strong>
+                        ${Number(
+                            item.jumlah_baris || 0
+                        )}
+                    </strong>
+
+                </td>
+
+                <td>
+                    ${statusHTML(item.status)}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        item.catatan || "-"
+                    )}
+                </td>
+
+            </tr>
+
+        `;
+
+    });
+
+}
+
+
+
+/* =====================================================
+   DELETE
+===================================================== */
+
+async function deleteData(id){
+
+    const yakin =
+        confirm(
+            "Yakin ingin menghapus data setoran ini?"
+        );
+
+
+    if(!yakin){
+
+        return;
+
+    }
+
+
+    const {
+        error
+    } = await supabaseClient
+        .from("setoran_hafalan")
+        .delete()
+        .eq("id", id);
+
+
+    if(error){
+
+        console.error(error);
+
+        alert(
+            "Gagal menghapus data:\n\n"
+            + error.message
+        );
+
+        return;
+
+    }
+
+
+    alert(
+        "Data berhasil dihapus."
+    );
+
+
+    loadData();
+
+}
+
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+function statusHTML(status){
+
+    if(status === "Lancar"){
+
+        return `
+
+            <span class="status-lancar">
+
+                Lancar
+
+            </span>
+
+        `;
+
+    }
+
+
+    return `
+
+        <span class="status-murojaah">
+
+            Perlu Murojaah
+
+        </span>
+
+    `;
+
+}
+
+
+
+/* =====================================================
+   FORMAT DATE
+===================================================== */
+
+function formatDate(date){
+
+    if(!date)
+        return "-";
+
+
+    const parts =
+        date.split("-");
+
+
+    if(parts.length !== 3)
+        return date;
+
+
+    return (
+        parts[2] +
+        "/" +
+        parts[1] +
+        "/" +
+        parts[0]
+    );
+
+}
+
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHTML(value){
+
+    return String(value)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+
+/* =====================================================
+   TODAY
+===================================================== */
+
+function setToday(){
+
+    const today =
+        new Date()
+            .toISOString()
+            .split("T")[0];
+
+
+    document.getElementById(
+        "tanggal"
+    ).value = today;
+
+}
+
+
+
+/* =====================================================
+   INITIALIZATION
+===================================================== */
+
+setupDropdowns();
+
+setToday();
+
+
+
+/* =====================================================
+   RESTORE SESSION
+===================================================== */
+
+const savedUser =
+    sessionStorage.getItem(
+        "currentUser"
+    );
+
+
+if(
+    savedUser &&
+    USERS.includes(savedUser)
+){
+
+    currentUser =
+        savedUser;
+
+
+    loginPage.style.display =
+        "none";
+
+
+    app.style.display =
+        "block";
+
+
+    currentUserElement.textContent =
+        currentUser;
+
+
+    loadData();
+
+}
+
+</script>
+
+</body>
+</html>
